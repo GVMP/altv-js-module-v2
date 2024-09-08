@@ -327,9 +327,12 @@ alt.Events.onKeyboardEvent(({ key, state }) => {
     if (!Keybind.registeredHandlers.has(key)) return;
 
     const boundKeys = Keybind.registeredHandlers.get(key);
-    const filteredKeys = boundKeys.filter((keybind) => keybind.keyState === state) ?? [];
-
-    for (const keybind of filteredKeys) {
-        keybind.callback?.();
+    
+    for(let i = 0; i < boundKeys.length; i++) {
+        const keybind = boundKeys[i];
+        
+        if (keybind.keyState === state) {
+            keybind.callback?.();
+        }
     }
 });
